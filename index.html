@@ -1,0 +1,906 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>✨ NOVA GREET · Adult Exclusive Game</title>
+  <!-- Modern Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', 'Syne', sans-serif;
+      background: radial-gradient(circle at 20% 10%, #302750, #0a0614 95%);
+      padding: 1.8rem;
+      position: relative;
+      transition: background 0.3s;
+    }
+
+    /* Floating particles */
+    .particle-field {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(210, 180, 255, 0.25);
+      border-radius: 50%;
+      box-shadow: 0 0 12px #b77eff;
+      animation: floatParticle 18s infinite alternate ease-in-out;
+    }
+
+    @keyframes floatParticle {
+      0% { transform: translateY(0px) translateX(0px); opacity: 0.1; }
+      100% { transform: translateY(-40px) translateX(25px); opacity: 0.4; }
+    }
+
+    body.light-mode {
+      background: radial-gradient(circle at 70% 30%, #f3e9ff, #ddd0f0);
+    }
+
+    /* Main glass card */
+    .glass-card {
+      max-width: 880px;
+      width: 100%;
+      background: rgba(18, 12, 35, 0.55);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-radius: 4rem 2rem 4rem 2rem;
+      padding: 2.5rem 2.6rem;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6), 
+                  0 0 0 1.5px rgba(190, 150, 255, 0.2) inset,
+                  0 0 40px rgba(120, 80, 220, 0.3);
+      border: 1px solid rgba(210, 170, 255, 0.18);
+      color: #efe6ff;
+      position: relative;
+      z-index: 20;
+      transition: all 0.3s;
+    }
+
+    body.light-mode .glass-card {
+      background: rgba(255, 248, 255, 0.6);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 25px 40px rgba(90, 50, 150, 0.15), 0 0 0 1.5px rgba(255, 255, 255, 0.7) inset;
+      border-color: rgba(200, 170, 240, 0.5);
+      color: #1e1730;
+    }
+
+    /* Header */
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .title-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 2.4rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #e9d0ff, #c2a4ff, #9f7eff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 6px 8px #371f6e);
+    }
+
+    .badge-live {
+      background: #a58aff30;
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-weight: 500;
+      backdrop-filter: blur(5px);
+      font-size: 0.9rem;
+      border: 1px solid #c7adff40;
+    }
+
+    .theme-toggle {
+      background: rgba(104, 74, 165, 0.2);
+      border: 1.5px solid rgba(210, 170, 255, 0.5);
+      border-radius: 40% 60% 30% 70% / 50% 40% 60% 50%;
+      width: 3.2rem;
+      height: 3.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+      color: #dac5ff;
+      font-size: 1.5rem;
+      transition: 0.2s;
+      box-shadow: 0 0 15px #a37eff;
+    }
+
+    body.light-mode .theme-toggle {
+      background: rgba(170, 130, 240, 0.25);
+      color: #3e2a70;
+      box-shadow: 0 0 12px #b392f0;
+    }
+
+    /* Input row */
+    .input-row {
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .input-field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .field-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      color: #cfbef5;
+    }
+    body.light-mode .field-label { color: #422e77; }
+
+    .field-label i {
+      font-size: 1.3rem;
+      width: 1.8rem;
+      color: #bda0ff;
+    }
+
+    .neo-input {
+      width: 100%;
+      padding: 1rem 1.4rem;
+      background: rgba(10, 5, 25, 0.5);
+      border: 1.8px solid rgba(200, 165, 255, 0.35);
+      border-radius: 2.8rem;
+      color: #f2e9ff;
+      font-size: 1.1rem;
+      font-weight: 500;
+      outline: none;
+      backdrop-filter: blur(5px);
+      transition: 0.2s;
+      font-family: 'Inter', sans-serif;
+      box-shadow: inset 0 2px 5px #00000030;
+    }
+
+    body.light-mode .neo-input {
+      background: rgba(255, 255, 255, 0.75);
+      border-color: rgba(150, 110, 230, 0.4);
+      color: #1a1238;
+    }
+
+    .neo-input:focus {
+      border-color: #c7a6ff;
+      box-shadow: 0 0 0 4px rgba(180, 130, 255, 0.25), inset 0 1px 4px #ffffff30;
+    }
+
+    /* Profile panel */
+    .profile-panel {
+      display: flex;
+      gap: 1.8rem;
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 2.8rem 1.2rem 2.8rem 1.2rem;
+      padding: 1.8rem 2rem;
+      margin: 0.5rem 0 1.8rem;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(230, 200, 255, 0.15);
+    }
+
+    .avatar-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .avatar-circle {
+      width: 85px;
+      height: 85px;
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      background: linear-gradient(145deg, #b185ff, #ffa6d5, #7aaaff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: white;
+      text-transform: uppercase;
+      box-shadow: 0 12px 18px -5px #3f2590, 0 0 0 3px #f2e2ff inset;
+      margin-bottom: 8px;
+      transition: 0.2s;
+    }
+
+    .greeting-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .greeting-line {
+      font-size: 2.3rem;
+      font-weight: 700;
+      line-height: 1.2;
+      background: linear-gradient(145deg, #ffeac2, #e4c9ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.3rem;
+    }
+
+    .motto-tag {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .progress-ring {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .ring-bg {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: conic-gradient(#b78aff 0deg, #b78aff 0deg, #3e2a5e 0deg);
+      transition: background 0.2s;
+      box-shadow: 0 0 8px #b78aff;
+    }
+
+    /* Stats grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 0.8rem;
+    }
+
+    .stat-card {
+      background: rgba(40, 25, 70, 0.3);
+      backdrop-filter: blur(5px);
+      padding: 0.9rem;
+      border-radius: 1.8rem 0.8rem 1.8rem 0.8rem;
+      border: 1px solid rgba(210, 175, 255, 0.25);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.7;
+    }
+
+    .stat-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    /* Action bar */
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin: 1.8rem 0 1rem;
+    }
+
+    .btn {
+      flex: 1 1 110px;
+      padding: 0.9rem 1rem;
+      border-radius: 40px 16px 40px 16px;
+      border: none;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      backdrop-filter: blur(10px);
+      background: rgba(70, 40, 120, 0.5);
+      color: #f0e2ff;
+      border: 1.5px solid #b392f0;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+      box-shadow: 0 6px 12px #00000030;
+    }
+
+    body.light-mode .btn {
+      background: rgba(210, 180, 250, 0.5);
+      color: #271c4a;
+      border-color: #9a7fd6;
+    }
+
+    .btn:hover {
+      background: #9b74f0;
+      color: white;
+      border-color: #ffe1b3;
+      transform: translateY(-3px);
+      box-shadow: 0 15px 20px -8px #6d41c9;
+    }
+
+    .clear-btn { background: rgba(190, 100, 140, 0.3); border-color: #f9a8d4; }
+
+    /* Game section (reaction test) */
+    .game-section {
+      margin-top: 1.5rem;
+      padding: 1.2rem 1.5rem;
+      background: rgba(25, 15, 45, 0.35);
+      border-radius: 2.5rem 1rem 2.5rem 1rem;
+      backdrop-filter: blur(8px);
+      border: 1px solid #b38eff40;
+    }
+
+    .game-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+    .game-header i { color: #ffd966; font-size: 1.3rem; }
+    .game-title { font-weight: 700; letter-spacing: 0.5px; }
+
+    .reflex-game {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .game-btn {
+      background: #a26eff40;
+      border: 2px solid #cbadff;
+      padding: 0.8rem 1.8rem;
+      border-radius: 40px;
+      font-weight: 700;
+      color: #f3e6ff;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+      transition: 0.2s;
+    }
+    .game-btn:hover { background: #b185ff; }
+    .reaction-feedback {
+      font-family: monospace;
+      font-size: 1.2rem;
+      background: #00000020;
+      padding: 0.4rem 1.2rem;
+      border-radius: 30px;
+    }
+
+    /* Adult exclusive game panel */
+    .adult-game-panel {
+      margin-top: 1.8rem;
+      padding: 1.5rem;
+      background: linear-gradient(145deg, #2a1a4e40, #1e103a60);
+      border-radius: 2.5rem 1rem 2.5rem 1rem;
+      backdrop-filter: blur(12px);
+      border: 2px solid #e2b0ff80;
+      box-shadow: 0 0 20px #b37eff60;
+      transition: opacity 0.3s;
+    }
+
+    .adult-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+      color: #ffe694;
+    }
+
+    .guess-game {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .guess-input {
+      background: #0c0820;
+      border: 2px solid #c09aff;
+      border-radius: 30px;
+      padding: 0.7rem 1.2rem;
+      color: white;
+      width: 100px;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+    .guess-feedback {
+      font-weight: 600;
+      min-width: 140px;
+    }
+
+    .footer-note {
+      margin-top: 1rem;
+      text-align: right;
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    /* disabled overlay effect for minor (optional styling) */
+    .adult-restricted-blur {
+      filter: blur(2px);
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 650px) {
+      .glass-card { padding: 1.8rem; }
+      .input-row { grid-template-columns: 1fr; }
+      .profile-panel { flex-direction: column; align-items: center; text-align: center; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<!-- Floating particles -->
+<div class="particle-field" id="particleContainer"></div>
+
+<div class="glass-card">
+  <!-- Header -->
+  <div class="card-header">
+    <div class="title-section">
+      <h1>NOVA·GREET</h1>
+      <span class="badge-live"><i class="fas fa-bolt"></i> LIVE</span>
+    </div>
+    <div class="theme-toggle" id="themeToggle" title="Switch theme">
+      <i class="fas fa-moon" id="themeIcon"></i>
+    </div>
+  </div>
+
+  <!-- Inputs -->
+  <div class="input-row">
+    <div class="input-field">
+      <div class="field-label"><i class="fas fa-user-astronaut"></i> Your name</div>
+      <input type="text" id="nameInput" class="neo-input" placeholder="e.g. Luna" autocomplete="off">
+      <div style="display:flex; justify-content:space-between; margin-top:5px; font-size:0.85rem;">
+        <span><i class="far fa-keyboard"></i> real‑time</span>
+        <span id="nameCharCount">✨ 0 chars</span>
+      </div>
+    </div>
+    <div class="input-field">
+      <div class="field-label"><i class="fas fa-cake-candles"></i> Your age</div>
+      <input type="number" id="ageInput" class="neo-input" placeholder="18" min="0" max="130">
+      <div style="margin-top:5px; font-size:0.85rem; opacity:0.8;" id="ageHint"></div>
+    </div>
+  </div>
+
+  <!-- Profile panel (avatar + greeting) -->
+  <div class="profile-panel">
+    <div class="avatar-block">
+      <div class="avatar-circle" id="avatarInitial">?</div>
+      <span style="font-size:0.9rem;" id="luckyColorTag"><i class="fas fa-palette"></i> lucky color</span>
+    </div>
+    <div class="greeting-main">
+      <div class="greeting-line" id="greetingMessage">Hello, friend ✨</div>
+      <div class="motto-tag" id="mottoMessage">Enter your name to begin</div>
+      <div class="progress-ring">
+        <div class="ring-bg" id="lifeRing"></div>
+        <div><span id="lifePercent">0%</span> · life progress</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label"><i class="fas fa-scale-balanced"></i> STATUS</div>
+      <div class="stat-value" id="ageStatusDisplay">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label"><i class="fas fa-calendar"></i> BIRTH YEAR</div>
+      <div class="stat-value" id="birthYear">----</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label"><i class="fas fa-star"></i> ZODIAC VIBE</div>
+      <div class="stat-value" id="zodiacHint">✨</div>
+    </div>
+  </div>
+
+  <!-- Action buttons -->
+  <div class="action-bar">
+    <button class="btn clear-btn" id="clearBtn"><i class="fas fa-eraser"></i> Clear</button>
+    <button class="btn" id="exampleBtn"><i class="fas fa-user-check"></i> Example</button>
+    <button class="btn" id="surpriseBtn"><i class="fas fa-dice-d6"></i> Surprise</button>
+    <button class="btn" id="copyCardBtn"><i class="fas fa-copy"></i> Copy</button>
+  </div>
+
+  <!-- MINI GAME: Reaction Test (always visible) -->
+  <div class="game-section">
+    <div class="game-header">
+      <i class="fas fa-gamepad"></i>
+      <span class="game-title">⚡ REACTION TEST</span>
+    </div>
+    <div class="reflex-game">
+      <button class="game-btn" id="startGameBtn"><i class="fas fa-play"></i> Start / Tap</button>
+      <div id="gameMessage" class="reaction-feedback">Click when green</div>
+      <span style="margin-left: auto; opacity:0.7;"><i class="far fa-clock"></i> <span id="bestTimeDisplay">—</span> ms</span>
+    </div>
+    <p style="font-size:0.8rem; margin-top:10px; opacity:0.7;">Wait for green, then click as fast as possible!</p>
+  </div>
+
+  <!-- ADULT EXCLUSIVE GAME: Number Guesser (only appears if age >= 18) -->
+  <div id="adultGameContainer" style="display: none;">
+    <div class="adult-game-panel">
+      <div class="adult-badge">
+        <i class="fas fa-crown" style="color: gold;"></i>
+        <span style="font-weight: 700; font-size: 1.2rem;">ADULT EXCLUSIVE · GUESS THE NUMBER</span>
+      </div>
+      <p style="margin-bottom: 12px; opacity:0.9;">I'm thinking of a number between 1 and 20. Can you guess?</p>
+      <div class="guess-game">
+        <input type="number" id="guessInput" class="guess-input" placeholder="1-20" min="1" max="20">
+        <button class="game-btn" id="submitGuessBtn" style="padding:0.6rem 1.5rem;">Guess</button>
+        <button class="game-btn" id="newNumberBtn" style="padding:0.6rem 1.2rem;"><i class="fas fa-redo-alt"></i> New</button>
+        <span id="guessFeedback" class="guess-feedback">🤔 Make a guess</span>
+        <span style="margin-left: auto;"><i class="fas fa-trophy"></i> <span id="guessAttempts">0</span></span>
+      </div>
+      <p style="font-size:0.8rem; margin-top:10px; opacity:0.7;">🎯 Only for adults! (Age ≥ 18)</p>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <i class="fas fa-sync-alt fa-spin"></i> adult/minor · avatar · life ring · 2 games
+  </div>
+</div>
+
+<script>
+  (function(){
+    "use strict";
+
+    // Generate particles
+    const particleContainer = document.getElementById('particleContainer');
+    for (let i=0; i<16; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random()*100+'%';
+      p.style.top = Math.random()*100+'%';
+      p.style.animationDelay = Math.random()*12+'s';
+      p.style.animationDuration = 14 + Math.random()*18+'s';
+      p.style.width = (2+Math.random()*5)+'px';
+      p.style.height = p.style.width;
+      particleContainer.appendChild(p);
+    }
+
+    // DOM elements
+    const body = document.body;
+    const nameInput = document.getElementById('nameInput');
+    const ageInput = document.getElementById('ageInput');
+    const greetingMsg = document.getElementById('greetingMessage');
+    const mottoMsg = document.getElementById('mottoMessage');
+    const avatarInitial = document.getElementById('avatarInitial');
+    const luckyColorTag = document.getElementById('luckyColorTag');
+    const nameCharCount = document.getElementById('nameCharCount');
+    const ageHint = document.getElementById('ageHint');
+    const ageStatusDisplay = document.getElementById('ageStatusDisplay');
+    const birthYearSpan = document.getElementById('birthYear');
+    const zodiacHint = document.getElementById('zodiacHint');
+    const lifeRing = document.getElementById('lifeRing');
+    const lifePercent = document.getElementById('lifePercent');
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const adultGameContainer = document.getElementById('adultGameContainer');
+
+    const currentYear = new Date().getFullYear();
+
+    // Guess game elements (will be initialized after adult detection)
+    let secretNumber = Math.floor(Math.random() * 20) + 1;
+    let attempts = 0;
+    let guessInput, submitGuessBtn, newNumberBtn, guessFeedback, attemptsSpan;
+    let adultGameActive = false; // Flag to enable game logic only when adult
+
+    function getLuckyColor(name) {
+      if (!name) return '#b78aff';
+      let hash = 0;
+      for (let i=0; i<name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+      return `hsl(${Math.abs(hash) % 360}, 70%, 65%)`;
+    }
+
+    function getZodiacByAge(age) {
+      if (age === null || isNaN(age)) return '✨ enter age';
+      const signs = ['♈ Aries','♉ Taurus','♊ Gemini','♋ Cancer','♌ Leo','♍ Virgo','♎ Libra','♏ Scorpio','♐ Sagittarius','♑ Capricorn','♒ Aquarius','♓ Pisces'];
+      return signs[age % 12] + ' energy';
+    }
+
+    let isAdultFlag = false; // track for game visibility
+
+    // Reset adult guess game state (clear attempts, new secret)
+    function resetGuessGameState() {
+      if (!adultGameActive) return;
+      secretNumber = Math.floor(Math.random() * 20) + 1;
+      attempts = 0;
+      if (attemptsSpan) attemptsSpan.textContent = "0";
+      if (guessFeedback) guessFeedback.textContent = '🤔 New number! Make a guess';
+      if (guessInput) guessInput.value = '';
+    }
+
+    // This function sets up the guess game listeners ONLY ONCE when adult mode appears
+    function setupAdultGame() {
+      guessInput = document.getElementById('guessInput');
+      submitGuessBtn = document.getElementById('submitGuessBtn');
+      newNumberBtn = document.getElementById('newNumberBtn');
+      guessFeedback = document.getElementById('guessFeedback');
+      attemptsSpan = document.getElementById('guessAttempts');
+      
+      if (!submitGuessBtn || adultGameActive) return;
+      
+      adultGameActive = true;
+      // initial fresh secret
+      secretNumber = Math.floor(Math.random() * 20) + 1;
+      attempts = 0;
+      if (attemptsSpan) attemptsSpan.textContent = "0";
+      if (guessFeedback) guessFeedback.textContent = '🤔 Make a guess (1-20)';
+      
+      // Remove any previous listeners by cloning? Instead, we attach fresh using named functions or ensure not duplicated.
+      // Using replace approach: remove old listeners via new event listeners with once flag? simpler: we will define handlers.
+      // To avoid multiple binds, we remove existing listeners if any, but easier: override with new listeners.
+      const newSubmitHandler = () => {
+        if (!isAdultFlag) {
+          if (guessFeedback) guessFeedback.textContent = '🔞 Adults only. Age must be 18+.';
+          return;
+        }
+        if (!guessInput) return;
+        const guessVal = parseInt(guessInput.value);
+        if (isNaN(guessVal) || guessVal < 1 || guessVal > 20) {
+          if (guessFeedback) guessFeedback.textContent = '❌ Enter a number 1-20';
+          return;
+        }
+        attempts++;
+        if (attemptsSpan) attemptsSpan.textContent = attempts;
+        if (guessVal === secretNumber) {
+          if (guessFeedback) guessFeedback.textContent = `🎉 CORRECT! The number was ${secretNumber}. You win!`;
+          // optional: generate new number automatically after win? but user can click new. We keep as is.
+        } else if (guessVal < secretNumber) {
+          if (guessFeedback) guessFeedback.textContent = '📈 Too low! Try higher.';
+        } else {
+          if (guessFeedback) guessFeedback.textContent = '📉 Too high! Try lower.';
+        }
+        if (guessInput) guessInput.value = '';
+      };
+      
+      const newGameHandler = () => {
+        if (!isAdultFlag) {
+          if (guessFeedback) guessFeedback.textContent = '🔞 Adult game restricted.';
+          return;
+        }
+        secretNumber = Math.floor(Math.random() * 20) + 1;
+        attempts = 0;
+        if (attemptsSpan) attemptsSpan.textContent = "0";
+        if (guessFeedback) guessFeedback.textContent = '✨ New number! Guess away.';
+        if (guessInput) guessInput.value = '';
+      };
+      
+      submitGuessBtn.removeEventListener('click', submitGuessBtn._listener);
+      newNumberBtn.removeEventListener('click', newNumberBtn._listener);
+      
+      submitGuessBtn.addEventListener('click', newSubmitHandler);
+      newNumberBtn.addEventListener('click', newGameHandler);
+      
+      submitGuessBtn._listener = newSubmitHandler;
+      newNumberBtn._listener = newGameHandler;
+    }
+
+    function refreshAll() {
+      const rawName = nameInput.value.trim();
+      const displayName = rawName === '' ? 'friend' : rawName;
+      const timeEmoji = new Date().getHours() < 12 ? '☀️' : (new Date().getHours() < 18 ? '🌤️' : '🌙');
+      
+      greetingMsg.innerHTML = `${timeEmoji} Hello, ${displayName}!`;
+      
+      const firstChar = rawName.charAt(0).toUpperCase() || '?';
+      avatarInitial.textContent = firstChar;
+      
+      const len = rawName.length;
+      nameCharCount.innerHTML = `✨ ${len} char${len !== 1 ? 's' : ''}`;
+      
+      const lucky = getLuckyColor(rawName);
+      luckyColorTag.innerHTML = `<i class="fas fa-palette"></i> lucky <span style="background:${lucky}; padding:2px 10px; border-radius:20px; margin-left:6px; color:#0f0a1a;">${lucky}</span>`;
+      
+      if (rawName === '') {
+        mottoMsg.textContent = 'Enter your name to start the magic ✨';
+      } else if (len <= 3) {
+        mottoMsg.textContent = 'Short & powerful ⚡';
+      } else if (len >= 8) {
+        mottoMsg.textContent = 'Majestic name, destined for greatness 👑';
+      } else {
+        mottoMsg.textContent = 'This name has a nice ring to it 🎵';
+      }
+
+      const ageVal = ageInput.value.trim();
+      let ageNum = null, valid = false;
+      if (ageVal !== '') {
+        ageNum = Number(ageVal);
+        if (!isNaN(ageNum) && Number.isInteger(ageNum) && ageNum >= 0 && ageNum <= 130) valid = true;
+      }
+
+      let statusText = '', birthYearText = '----', zodiacText = '✨', ringPercent = 0;
+      let adultDetected = false;
+      
+      if (valid) {
+        const isAdultNow = ageNum >= 18;
+        adultDetected = isAdultNow;
+        statusText = isAdultNow ? '🧑 Adult' : '🧒 Minor';
+        birthYearText = (currentYear - ageNum).toString();
+        zodiacText = getZodiacByAge(ageNum);
+        ageHint.textContent = `✓ Valid · ${ageNum} years`;
+        ringPercent = Math.min(ageNum, 100);
+      } else {
+        if (ageVal === '') {
+          statusText = '⚪ Enter age';
+          ageHint.textContent = 'Type age to see status';
+        } else {
+          statusText = '⚠️ Invalid';
+          ageHint.textContent = 'Enter integer 0-130';
+        }
+        birthYearText = '----';
+        zodiacText = '✨ waiting';
+      }
+
+      ageStatusDisplay.textContent = statusText;
+      birthYearSpan.textContent = birthYearText;
+      zodiacHint.textContent = zodiacText;
+
+      const deg = (ringPercent / 100) * 360;
+      lifeRing.style.background = `conic-gradient(#b78aff 0deg, #b78aff ${deg}deg, #3e2a5e ${deg}deg)`;
+      lifePercent.textContent = `${ringPercent}%`;
+
+      // Handle adult exclusive game container visibility with strict age >= 18 condition
+      const previousAdult = isAdultFlag;
+      isAdultFlag = adultDetected;
+      
+      if (isAdultFlag) {
+        adultGameContainer.style.display = 'block';
+        // Setup game mechanics if not yet initialized (or ensure it's ready)
+        if (!adultGameActive) {
+          setupAdultGame();
+        } else {
+          // Ensure game UI elements are accessible, if reset state when adult appears fresh
+          if (guessFeedback && attemptsSpan) {
+            // optional: keep existing secret but resetting attempts might confuse, but fine
+            // we just ensure guess game is responsive
+          }
+        }
+      } else {
+        adultGameContainer.style.display = 'none';
+        // If adult game becomes hidden, we don't reset the state but block guesses
+        // However we also want to make sure any attempt to guess from hidden container is prevented.
+      }
+    }
+
+    // Listeners
+    nameInput.addEventListener('input', refreshAll);
+    ageInput.addEventListener('input', refreshAll);
+
+    // Buttons
+    document.getElementById('clearBtn').addEventListener('click', ()=>{
+      nameInput.value = '';
+      ageInput.value = '';
+      refreshAll();
+    });
+    document.getElementById('exampleBtn').addEventListener('click', ()=>{
+      nameInput.value = 'Stella';
+      ageInput.value = '24';
+      refreshAll();
+    });
+    document.getElementById('surpriseBtn').addEventListener('click', ()=>{
+      const names = ['Nova','Zephyr','Lyra','Orion','Seren','Kael','Veda','Soren','Elara','Rumi'];
+      nameInput.value = names[Math.floor(Math.random()*names.length)];
+      const randomAge = Math.floor(Math.random()*55)+12;
+      ageInput.value = randomAge;
+      refreshAll();
+    });
+    document.getElementById('copyCardBtn').addEventListener('click', ()=>{
+      const g = greetingMsg.innerText;
+      const s = ageStatusDisplay.innerText;
+      const b = birthYearSpan.innerText;
+      navigator.clipboard?.writeText(`${g}\nStatus: ${s}\nBirth year: ${b}`).then(()=> alert('📋 Card info copied!'));
+    });
+
+    // Theme toggle
+    let light = false;
+    function setTheme(isLight) {
+      if (isLight) {
+        body.classList.add('light-mode');
+        themeIcon.className = 'fas fa-sun';
+      } else {
+        body.classList.remove('light-mode');
+        themeIcon.className = 'fas fa-moon';
+      }
+    }
+    setTheme(false);
+    themeToggle.addEventListener('click', ()=>{ light = !light; setTheme(light); });
+
+    // ---------- REACTION TEST GAME (fully functional) ----------
+    const gameBtn = document.getElementById('startGameBtn');
+    const gameMsg = document.getElementById('gameMessage');
+    const bestSpan = document.getElementById('bestTimeDisplay');
+    let state = 'waiting', startTime = 0, timeoutId = null;
+    let bestTime = localStorage.getItem('novaBestReaction') ? parseInt(localStorage.getItem('novaBestReaction')) : null;
+    if (bestTime) bestSpan.textContent = bestTime; else bestSpan.textContent = '—';
+
+    function resetReaction() {
+      if (timeoutId) clearTimeout(timeoutId);
+      state = 'waiting';
+      gameBtn.textContent = '⏳ Start / Tap';
+      gameBtn.style.background = '#a26eff40';
+      gameMsg.textContent = 'Click to start';
+    }
+
+    function setReady() {
+      state = 'ready';
+      startTime = performance.now();
+      gameBtn.textContent = '🍃 CLICK NOW!';
+      gameBtn.style.background = '#5fdd9d';
+      gameMsg.textContent = 'GO! Tap quickly!';
+      timeoutId = setTimeout(() => {
+        if (state === 'ready') {
+          gameMsg.textContent = 'Too slow! Try again.';
+          resetReaction();
+        }
+      }, 2000);
+    }
+
+    gameBtn.addEventListener('click', () => {
+      if (state === 'waiting') {
+        state = 'countdown';
+        gameBtn.textContent = '⏰ Wait for green...';
+        gameBtn.style.background = '#f0b37b';
+        gameMsg.textContent = 'Get ready...';
+        const delay = 800 + Math.floor(Math.random() * 1500);
+        timeoutId = setTimeout(() => setReady(), delay);
+      } else if (state === 'ready') {
+        const reaction = performance.now() - startTime;
+        const rounded = Math.round(reaction);
+        gameMsg.textContent = `⚡ ${rounded} ms!`;
+        if (bestTime === null || rounded < bestTime) {
+          bestTime = rounded;
+          localStorage.setItem('novaBestReaction', bestTime);
+          bestSpan.textContent = bestTime;
+          gameMsg.textContent += ' 🏆 New best!';
+        }
+        resetReaction();
+      } else if (state === 'countdown') {
+        if (timeoutId) clearTimeout(timeoutId);
+        gameMsg.textContent = '⏳ Too soon! Wait for green.';
+        resetReaction();
+      }
+    });
+    
+    // initial refresh
+    refreshAll();
+    // Pre-setup if age already adult by example or something, the refreshAll will show container and setupAdultGame called if needed.
+    // Also ensure for any edge case
+    if (document.getElementById('ageInput').value.trim() !== "") {
+      const ageNum = parseInt(document.getElementById('ageInput').value);
+      if (!isNaN(ageNum) && ageNum >= 18) {
+        if (!adultGameActive) setupAdultGame();
+      }
+    }
+  })();
+</script>
+</body>
+</html>
+```
